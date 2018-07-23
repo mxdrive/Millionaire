@@ -7,16 +7,17 @@ import java.util.*;
 class Millionaire {
 	private List<String> questions;
 	private List<String> splitRow;
-	private List<Integer> shownQuestions = new ArrayList<>();
+    private List<Integer> shownQuestions = new ArrayList<>();
 	private boolean isHelp = false;
 	private Points points = new Points();
 
-    void millionaire() {
+	void millionaire() {
+	    ParseFile parseFile = new ParseFile();
 		for (int i = 0; i < 15; i++) {
-			questions = new ParseFile().parseFile(points.getPointsWon());
+			questions = parseFile.parseFile(points.getPointsWon());
             showQuestion(setRandomQuestion());
 			showVariants();
-			
+
 		    if (!userAnswer()) {
 				break;
 			}
@@ -38,12 +39,13 @@ class Millionaire {
 			System.out.println("This is correct!");
 			isCorrectAnswer = true;
 			points.setPointsWon();
+            System.out.println(points.getPointsWon() + " points earned currently");
 		} else {
-			System.out.println("Sorry, this is incorrect!");
-			isCorrectAnswer = false;
-			points.dropPoints();
-			}
-			return isCorrectAnswer;
+            System.out.println("Sorry, this is incorrect!");
+            isCorrectAnswer = false;
+            points.dropPoints();
+        }
+        return isCorrectAnswer;
     }
 
     private void showQuestion(int randomNumber) {
@@ -61,15 +63,15 @@ class Millionaire {
 			
 			System.out.println(i + ". " + variant);
         }
-		if (!isHelp) { 
+		if (!isHelp) {
 			System.out.println("5. 50/50");
 		}
 	}
 
 	private int setRandomQuestion() {
-		int randomQuestion  = new Random().nextInt(questions.size());
+		int randomQuestion = new Random().nextInt(questions.size());
 		while (shownQuestions.contains(randomQuestion)) {
-			randomQuestion  = new Random().nextInt(questions.size());
+			randomQuestion = new Random().nextInt(questions.size());
 		}
 		shownQuestions.add(randomQuestion);
 		return randomQuestion;
@@ -85,4 +87,10 @@ class Millionaire {
 		}
 		isHelp = true;
 	}
+
+
+    void setShownQuestionsToNull() {
+        this.shownQuestions = null;
+    }
+
 }

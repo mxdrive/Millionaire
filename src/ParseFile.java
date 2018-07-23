@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 class ParseFile {
+    private File file = new File("./resources/questionsBase.txt");
 
     List<String> parseFile(int pointsWon) {
-        // TODO: move to separate file; add files with questions for different levels
-        File file = new File("./resources/questions.txt");
+        chooseFile(pointsWon);
+
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(file);
@@ -26,5 +27,15 @@ class ParseFile {
             }
         }
         return questions;
+    }
+
+    private void chooseFile(int pointsWon) {
+        if (pointsWon == 1000) {
+            file = new File("./resources/questionsExtended.txt");
+            new Millionaire().setShownQuestionsToNull();
+        } else if (pointsWon == 32000) {
+            file = new File("./resources/questionsPrime.txt");
+            new Millionaire().setShownQuestionsToNull();
+        }
     }
 }

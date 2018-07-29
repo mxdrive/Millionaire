@@ -31,11 +31,13 @@ class ParseFile {
 
     private void chooseFile(int pointsWon) {
         if (pointsWon == 1000) {
+            System.out.println("You earned the unburnt points!");
             file = new File("./resources/questionsExtended.txt");
-            new Millionaire().setShownQuestionsToNull();
+            new Millionaire().clearShownQuestionsList();
         } else if (pointsWon == 32000) {
+            System.out.println("You earned the unburnt points!");
             file = new File("./resources/questionsPrime.txt");
-            new Millionaire().setShownQuestionsToNull();
+            new Millionaire().clearShownQuestionsList();
         }
     }
 }

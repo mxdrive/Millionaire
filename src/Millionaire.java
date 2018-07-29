@@ -89,12 +89,8 @@ class Millionaire {
 	}
 
 
-    void setShownQuestionsToNull() {
-//        shownQuestions = null;
-//        for (int i = 0; i < shownQuestions.size(); i++) {
-        	shownQuestions.clear();
-//		System.out.println(shownQuestions.size() + " shownQ size");
-//		}
+    void clearShownQuestionsList() {
+		shownQuestions.clear();
     }
 
 }

@@ -16,10 +16,10 @@ class Points
 		for (int iterator : unburntPointsRange) {
 			if ((pointsWon - iterator) >= 0) {
 				pointsWon = iterator;
-				System.out.println("iterator " + iterator);
 				return;
 			}
 		}
+		pointsWon = 0;
 	}
 	
 	int getPointsWon() {

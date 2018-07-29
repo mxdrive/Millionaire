@@ -7,7 +7,7 @@ import java.util.*;
 class Millionaire {
 	private List<String> questions;
 	private List<String> splitRow;
-    private List<Integer> shownQuestions = new ArrayList<>();
+    private static List<Integer> shownQuestions = new ArrayList<>();
 	private boolean isHelp = false;
 	private Points points = new Points();
 
@@ -90,7 +90,11 @@ class Millionaire {
 
 
     void setShownQuestionsToNull() {
-        this.shownQuestions = null;
+//        shownQuestions = null;
+//        for (int i = 0; i < shownQuestions.size(); i++) {
+        	shownQuestions.clear();
+//		System.out.println(shownQuestions.size() + " shownQ size");
+//		}
     }
 
 }

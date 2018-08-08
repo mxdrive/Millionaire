@@ -10,6 +10,7 @@ class Millionaire {
     private static List<Integer> shownQuestions = new ArrayList<>();
 	private boolean isHelp = false;
 	private boolean isPeopleHelp = false;
+	private boolean isFriendsHelp = false;
 	private Points points = new Points();
 	private int correctAnswer;
 
@@ -44,6 +45,13 @@ class Millionaire {
             answer = scanner.next();
         }
 
+        if (Integer.parseInt(answer) == 7 && !isFriendsHelp) {
+            isFriendsHelp = new Hints().friendsHelp(points.getPointsWon(), correctAnswer);
+            showVariants();
+            answer = scanner.next();
+        }
+
+        //TODO: fix outOBound exception if choosing two hints; fix numeration of hints if chosing not last hint
 		if (splitRow.get(Integer.parseInt(answer)).contains("{correct}")) {
 			System.out.println("This is correct!");
 			isCorrectAnswer = true;
@@ -80,6 +88,10 @@ class Millionaire {
 
         if (!isPeopleHelp) {
             System.out.println("6. People's help");
+        }
+
+        if (!isFriendsHelp) {
+            System.out.println("7. Friend's help");
         }
 	}
 

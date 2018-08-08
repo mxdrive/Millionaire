@@ -26,6 +26,15 @@ class Hints {
         return true;
     }
 
+    boolean friendsHelp(int pointsWon, int correctAnswer) {
+        setCoefficient(pointsWon);
+        System.out.println("---------------");
+        System.out.println("Your friend think variant " + (getIndexOfMaxValue(randomPercentsList(correctAnswer)) + 1) +
+        " is correct");
+        System.out.println("---------------");
+        return true;
+    }
+
     private int[] randomPercentsList(int correctAnswerIndex) {
         List<int[]> randomRes = new ArrayList<>();
         for (int k = 0; k <= coefficient; k++) {

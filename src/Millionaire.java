@@ -88,6 +88,32 @@ class Millionaire {
 		isHelp = true;
 	}
 
+	void peopleHelp() {
+		List<int[]> randomRes = new ArrayList<>();
+		for (int i = 0; i < 50; i++) {
+			int[] pollRes = new int[4];
+			for (int variants = 0; variants < 4; variants++) {
+				if (variants == 3) {
+					pollRes[variants] = 100 - Arrays.stream(pollRes).sum();
+				} else if (variants == 0) {
+					pollRes[variants] = new Random().nextInt(100 + 1);
+				} else {
+					do {
+						pollRes[variants] = new Random().nextInt(100 + 1);
+					} while (Arrays.stream(pollRes).sum() != 100 && Arrays.stream(pollRes).sum() >= 100);
+				}
+			}
+			randomRes.add(pollRes);
+		}
+
+		for (int[] randomRe : randomRes) {
+			for (int i : randomRe) {
+				System.out.print(i + " ");
+			}
+			System.out.println();
+		}
+	}
+
 
     void clearShownQuestionsList() {
 		shownQuestions.clear();

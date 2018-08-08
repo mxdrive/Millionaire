@@ -9,7 +9,9 @@ class Millionaire {
 	private List<String> splitRow;
     private static List<Integer> shownQuestions = new ArrayList<>();
 	private boolean isHelp = false;
+	private boolean isPeopleHelp = false;
 	private Points points = new Points();
+	private int correctAnswer;
 
 	void millionaire() {
 	    ParseFile parseFile = new ParseFile();
@@ -31,10 +33,17 @@ class Millionaire {
 		System.out.println("Type your answer number");
         String answer =scanner.next();
 		if (Integer.parseInt(answer) == 5 && !isHelp) {
-			fiftyFifty();
+			isHelp = new Hints().fiftyFifty(splitRow);
 			showVariants();
 			answer = scanner.next();
 		}
+
+        if (Integer.parseInt(answer) == 6 && !isPeopleHelp) {
+            isPeopleHelp = new Hints().peopleHelp(points.getPointsWon(), correctAnswer);
+            showVariants();
+            answer = scanner.next();
+        }
+
 		if (splitRow.get(Integer.parseInt(answer)).contains("{correct}")) {
 			System.out.println("This is correct!");
 			isCorrectAnswer = true;
@@ -58,14 +67,20 @@ class Millionaire {
 		for (int i = 1; i < splitRow.size(); i++) {
 			String variant = splitRow.get(i);
 			if (variant.contains("{correct}")) {
+			    correctAnswer = i - 1;
 				variant = variant.replace("{correct}", "");
 			}
 			
 			System.out.println(i + ". " + variant);
         }
+
 		if (!isHelp) {
 			System.out.println("5. 50/50");
 		}
+
+        if (!isPeopleHelp) {
+            System.out.println("6. People's help");
+        }
 	}
 
 	private int setRandomQuestion() {
@@ -76,47 +91,8 @@ class Millionaire {
 		shownQuestions.add(randomQuestion);
 		return randomQuestion;
 	}
-	
-	private void fiftyFifty() {
-		for (int i = 0; i < 2; i++) {
-			int rowToRemove = new Random().nextInt(splitRow.size() - 1) + 1;
-			while (splitRow.get(rowToRemove).contains("{correct}")) {
-				rowToRemove = new Random().nextInt(splitRow.size() - 1) + 1;
-			}
-			splitRow.remove(rowToRemove);
-		}
-		isHelp = true;
-	}
-
-	void peopleHelp() {
-		List<int[]> randomRes = new ArrayList<>();
-		for (int i = 0; i < 50; i++) {
-			int[] pollRes = new int[4];
-			for (int variants = 0; variants < 4; variants++) {
-				if (variants == 3) {
-					pollRes[variants] = 100 - Arrays.stream(pollRes).sum();
-				} else if (variants == 0) {
-					pollRes[variants] = new Random().nextInt(100 + 1);
-				} else {
-					do {
-						pollRes[variants] = new Random().nextInt(100 + 1);
-					} while (Arrays.stream(pollRes).sum() != 100 && Arrays.stream(pollRes).sum() >= 100);
-				}
-			}
-			randomRes.add(pollRes);
-		}
-
-		for (int[] randomRe : randomRes) {
-			for (int i : randomRe) {
-				System.out.print(i + " ");
-			}
-			System.out.println();
-		}
-	}
-
 
     void clearShownQuestionsList() {
 		shownQuestions.clear();
     }
-
 }

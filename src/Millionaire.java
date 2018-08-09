@@ -8,7 +8,7 @@ class Millionaire {
 	private List<String> questions;
 	private List<String> splitRow;
     private static List<Integer> shownQuestions = new ArrayList<>();
-	private boolean isHelp = false;
+	private boolean isFiftyFiftyHelp = false;
 	private boolean isPeopleHelp = false;
 	private boolean isFriendsHelp = false;
 	private Points points = new Points();
@@ -36,8 +36,8 @@ class Millionaire {
         int answer = getAnswer(scanner);
 
 		while ((answer - 1) >= 4) {
-			if (variantsList.get((answer - 1)).equals(". 50/50") && !isHelp) {
-				isHelp = new Hints().fiftyFifty(splitRow);
+			if (variantsList.get((answer - 1)).equals(". 50/50") && !isFiftyFiftyHelp) {
+				isFiftyFiftyHelp = new Hints().fiftyFifty(splitRow);
 				answer = ifHint(answer, scanner);
 			}
 
@@ -83,7 +83,7 @@ class Millionaire {
 			variantsList.add(". " + variant);
         }
 
-		if (!isHelp) {
+		if (!isFiftyFiftyHelp) {
 			variantsList.add(". 50/50");
 		}
 

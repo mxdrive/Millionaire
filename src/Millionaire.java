@@ -13,6 +13,7 @@ class Millionaire {
 	private boolean isFriendsHelp = false;
 	private Points points = new Points();
 	private int correctAnswer;
+	private List<String> variantsList = new ArrayList<>();
 
 	void millionaire() {
 	    ParseFile parseFile = new ParseFile();
@@ -30,29 +31,28 @@ class Millionaire {
 
     private boolean userAnswer() {
 		boolean isCorrectAnswer;
-        Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("Type your answer number");
-        String answer =scanner.next();
-		if (Integer.parseInt(answer) == 5 && !isHelp) {
-			isHelp = new Hints().fiftyFifty(splitRow);
-			showVariants();
-			answer = scanner.next();
+        int answer = getAnswer(scanner);
+
+		while ((answer - 1) >= 4) {
+			if (variantsList.get((answer - 1)).equals(". 50/50") && !isHelp) {
+				isHelp = new Hints().fiftyFifty(splitRow);
+				answer = ifHint(answer, scanner);
+			}
+
+			if (variantsList.get((answer - 1)).equals(". People's help") && !isPeopleHelp) {
+				isPeopleHelp = new Hints().peopleHelp(points.getPointsWon(), correctAnswer);
+				answer = ifHint(answer, scanner);
+			}
+
+			if (variantsList.get((answer - 1)).equals(". Friend's help") && !isFriendsHelp) {
+				isFriendsHelp = new Hints().friendsHelp(points.getPointsWon(), correctAnswer);
+				answer = ifHint(answer, scanner);
+			}
 		}
 
-        if (Integer.parseInt(answer) == 6 && !isPeopleHelp) {
-            isPeopleHelp = new Hints().peopleHelp(points.getPointsWon(), correctAnswer);
-            showVariants();
-            answer = scanner.next();
-        }
-
-        if (Integer.parseInt(answer) == 7 && !isFriendsHelp) {
-            isFriendsHelp = new Hints().friendsHelp(points.getPointsWon(), correctAnswer);
-            showVariants();
-            answer = scanner.next();
-        }
-
-        //TODO: fix outOBound exception if choosing two hints; fix numeration of hints if chosing not last hint
-		if (splitRow.get(Integer.parseInt(answer)).contains("{correct}")) {
+		if (splitRow.get(answer).contains("{correct}")) {
 			System.out.println("This is correct!");
 			isCorrectAnswer = true;
 			points.setPointsWon();
@@ -72,27 +72,32 @@ class Millionaire {
     }
 
 	private void showVariants() {
-		for (int i = 1; i < splitRow.size(); i++) {
-			String variant = splitRow.get(i);
+		variantsList.clear();
+		for (int variantsIterator = 1; variantsIterator < splitRow.size(); variantsIterator++) {
+			String variant = splitRow.get(variantsIterator);
 			if (variant.contains("{correct}")) {
-			    correctAnswer = i - 1;
+			    correctAnswer = variantsIterator - 1;
 				variant = variant.replace("{correct}", "");
 			}
 			
-			System.out.println(i + ". " + variant);
+			variantsList.add(". " + variant);
         }
 
 		if (!isHelp) {
-			System.out.println("5. 50/50");
+			variantsList.add(". 50/50");
 		}
 
         if (!isPeopleHelp) {
-            System.out.println("6. People's help");
+            variantsList.add(". People's help");
         }
 
         if (!isFriendsHelp) {
-            System.out.println("7. Friend's help");
+            variantsList.add(". Friend's help");
         }
+
+		for (int s = 1; s <= variantsList.size(); s++) {
+			System.out.println(s + variantsList.get(s - 1));
+		}
 	}
 
 	private int setRandomQuestion() {
@@ -102,6 +107,28 @@ class Millionaire {
 		}
 		shownQuestions.add(randomQuestion);
 		return randomQuestion;
+	}
+
+	private int ifHint(int answer, Scanner scanner) {
+		variantsList.remove(answer - 1);
+		showVariants();
+		System.out.println("Type your answer number");
+		answer = getAnswer(scanner);
+		return answer;
+	}
+
+	private int getAnswer(Scanner scanner) {
+		String answer = scanner.next();
+		int parsedAnswer = 0;
+		while (parsedAnswer == 0) {
+			try {
+				parsedAnswer = Integer.parseInt(answer);
+			} catch (Exception e) {
+				System.out.println("Wrong input! Please try again");
+				answer = scanner.next();
+			}
+		}
+		return parsedAnswer;
 	}
 
     void clearShownQuestionsList() {

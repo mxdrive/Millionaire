@@ -23,6 +23,7 @@ public class UserInterface extends Application {
         //TODO wrap with if-else if hints
         buttonsList.add(createButton("hint", 150, 250));
 
+        //TODO add method to handle trigger
         buttonsList.get(0).setOnMouseClicked((new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 System.out.println("Hello World");
@@ -34,6 +35,7 @@ public class UserInterface extends Application {
                 System.out.println("Hello World");
             }
         }));
+
         //Creating a Group object
         Group root = new Group();
 

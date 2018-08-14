@@ -8,6 +8,7 @@ class Millionaire {
 	private List<String> questions;
 	private List<String> splitRow;
     private static List<Integer> shownQuestions = new ArrayList<>();
+
 	private boolean isFiftyFiftyHelp = false;
 	private boolean isPeopleHelp = false;
 	private boolean isFriendsHelp = false;
@@ -134,4 +135,9 @@ class Millionaire {
     void clearShownQuestionsList() {
 		shownQuestions.clear();
     }
+
+	public boolean[] isHelp() {
+		boolean[] isHelp = {isFiftyFiftyHelp, isPeopleHelp, isFriendsHelp};
+		return isHelp;
+	}
 }

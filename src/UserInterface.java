@@ -21,7 +21,7 @@ public class UserInterface extends Application {
         buttonsList.add(createButton("answer 4", 400, 200));
 
         //TODO wrap with if-else if hints
-        buttonsList.add(createButton("hint", 150, 200));
+        buttonsList.add(createButton("hint", 150, 250));
 
         buttonsList.get(0).setOnMouseClicked((new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -40,8 +40,6 @@ public class UserInterface extends Application {
         for (Button button : buttonsList) {
             root.getChildren().add(button);
         }
-
-        System.out.println(root.getChildren());
 
         //Creating a scene object
         Scene scene = new Scene(root, 600, 300);
